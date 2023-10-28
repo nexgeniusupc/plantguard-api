@@ -1,3 +1,9 @@
+commit-msg:
+  parallel: true
+  commands:
+    commitlint:
+      run: yarn commitlint --edit
+
 pre-commit:
   parallel: true
   commands:
