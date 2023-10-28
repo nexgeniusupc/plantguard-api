@@ -22,12 +22,18 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "types": "tsc --noemit",
-    "lint": "concurrently -s -n lint: \"yarn:lint:*(!fix)\"",
-    "lint:ts": "concurrently -s -n lint:ts: \"yarn:lints:ts:*\"",
-    "lints:ts:eslint": "eslint --cache \"**/*.ts\"",
-    "lint:fix": "concurrently -s -n lint:fix: \"yarn:lint:fix:*\"",
-    "lint:fix:ts": "concurrently -s -n lint:fix:ts: \"yarn:lints:fix:ts:*\"",
-    "lints:fix:ts:eslint": "eslint --fix --cache \"**/*.ts\""
+    "lint": "eslint --cache \"**/*.ts\"",
+    "lint:fix": "eslint --fix --cache \"**/*.ts\"",
+    "format": "concurrently -s -n format: \"yarn:format:*(!fix)\"",
+    "format:ts": "prettier -c \"**/*.ts\"",
+    "format:json": "prettier -c \"**/*.json(c)?\"",
+    "format:md": "prettier -c \"**/*.md\"",
+    "format:yml": "prettier -c \"**/*.yml\"",
+    "format:fix": "concurrently -s -n format:fix: \"yarn:format:fix:*\"",
+    "format:fix:ts": "prettier -w \"**/*.ts\"",
+    "format:fix:json": "prettier -w \"**/*.json(c)?\"",
+    "format:fix:md": "prettier -w \"**/*.md\"",
+    "format:fix:yml": "prettier -w \"**/*.yml\""
   },
   "dependencies": {
     "concurrently": "^8.2.2",
@@ -35,12 +41,15 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@types/eslint": "^8.44.6",
+    "@types/prettier": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-unicorn": "^48.0.1",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "wrangler": "^3.15.0"
   }
