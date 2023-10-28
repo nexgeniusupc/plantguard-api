@@ -1,0 +1,19 @@
+{
+  "git.autofetch": true,
+  "files.insertFinalNewline": true,
+  "editor.rulers": [120],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.prettier": true
+  },
+  "javascript.preferences.quoteStyle": "double",
+  "javascript.referencesCodeLens.enabled": true,
+  "typescript.preferences.quoteStyle": "double",
+  "typescript.referencesCodeLens.enabled": true,
+  "[javascript][typescript][json][jsonc][markdown][yaml]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
