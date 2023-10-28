@@ -1,0 +1,34 @@
+{
+  "name": "plantguard-api",
+  "version": "0.0.0",
+  "description": "The API backend for PlantGuard, an IoT plant water monitoring system, powered by Cloudflare Workers.",
+  "author": {
+    "name": "NexGenius",
+    "email": "nexgenius@dalbitresb.com"
+  },
+  "homepage": "https://github.com/nexgeniusupc/plantguard-api",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexgeniusupc/plantguard-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nexgeniusupc/plantguard-api/issues"
+  },
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "packageManager": "yarn@4.0.0",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev"
+  },
+  "dependencies": {
+    "itty-router": "^4.0.23"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231025.0",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.15.0"
+  }
+}
