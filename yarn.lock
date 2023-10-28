@@ -2302,6 +2302,97 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lefthook-darwin-arm64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-darwin-arm64@npm:1.5.2"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-x64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-darwin-x64@npm:1.5.2"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-arm64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-freebsd-arm64@npm:1.5.2"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-x64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-freebsd-x64@npm:1.5.2"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-arm64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-linux-arm64@npm:1.5.2"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-x64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-linux-x64@npm:1.5.2"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-arm64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-windows-arm64@npm:1.5.2"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-x64@npm:1.5.2":
+  version: 1.5.2
+  resolution: "lefthook-windows-x64@npm:1.5.2"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "lefthook@npm:1.5.2"
+  dependencies:
+    lefthook-darwin-arm64: "npm:1.5.2"
+    lefthook-darwin-x64: "npm:1.5.2"
+    lefthook-freebsd-arm64: "npm:1.5.2"
+    lefthook-freebsd-x64: "npm:1.5.2"
+    lefthook-linux-arm64: "npm:1.5.2"
+    lefthook-linux-x64: "npm:1.5.2"
+    lefthook-windows-arm64: "npm:1.5.2"
+    lefthook-windows-x64: "npm:1.5.2"
+  dependenciesMeta:
+    lefthook-darwin-arm64:
+      optional: true
+    lefthook-darwin-x64:
+      optional: true
+    lefthook-freebsd-arm64:
+      optional: true
+    lefthook-freebsd-x64:
+      optional: true
+    lefthook-linux-arm64:
+      optional: true
+    lefthook-linux-x64:
+      optional: true
+    lefthook-windows-arm64:
+      optional: true
+    lefthook-windows-x64:
+      optional: true
+  bin:
+    lefthook: bin/index.js
+  checksum: 4acef1032d5c5489c0893cc5918e6bb0d2527efd1efcbd853ecf860e28d1f285a275e5bdd1429bf9bdccb942381d3437ffc62201ddea25a12e85092c47be3906
+  languageName: node
+  linkType: hard
+
 "levn@npm:^0.4.1":
   version: 0.4.1
   resolution: "levn@npm:0.4.1"
@@ -2856,6 +2947,7 @@ __metadata:
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-unicorn: "npm:^48.0.1"
     itty-router: "npm:^4.0.23"
+    lefthook: "npm:^1.5.2"
     prettier: "npm:^3.0.3"
     typescript: "npm:^5.2.2"
     wrangler: "npm:^3.15.0"

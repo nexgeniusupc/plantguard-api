@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: '*.{js,mjs,cjs,ts}'
+      run: yarn eslint --fix --cache {staged_files} && git add {staged_files}
+    prettier:
+      glob: '*.{js,mjs,cjs,ts,md,yml,yaml,json,jsonc}'
+      run: yarn prettier -w {staged_files} && git add {staged_files}
