@@ -728,15 +728,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@types/prettier@npm:3.0.0"
-  dependencies:
-    prettier: "npm:*"
-  checksum: edab8c0c0e56936e89c919cac17e384a9f231ce12062fb3beeb45bc45e7dcc4035dd3d7df3333b0bdd39f3b4501f22267a9dba45e22b9728c139857142e90282
-  languageName: node
-  linkType: hard
-
 "@types/semver@npm:^7.5.0":
   version: 7.5.4
   resolution: "@types/semver@npm:7.5.4"
@@ -2939,7 +2930,6 @@ __metadata:
     "@cloudflare/workers-types": "npm:^4.20231025.0"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.1.1"
     "@types/eslint": "npm:^8.44.6"
-    "@types/prettier": "npm:^3.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.9.0"
     "@typescript-eslint/parser": "npm:^6.9.0"
     concurrently: "npm:^8.2.2"
@@ -2968,7 +2958,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:*, prettier@npm:^3.0.3":
+"prettier@npm:^3.0.3":
   version: 3.0.3
   resolution: "prettier@npm:3.0.3"
   bin:
