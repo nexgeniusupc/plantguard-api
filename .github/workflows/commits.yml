@@ -1,0 +1,29 @@
+name: Commits
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  conventional-commits:
+    name: Conventional Commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Validate commits for push
+        if: github.event_name == 'push'
+        run: yarn commitlint --verbose --from ${{ github.event.before }} --to ${{ github.event.after }}
+      - name: Validate commits for pull request
+        if: github.event_name == 'pull_request'
+        run: yarn commitlint --verbose --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }}

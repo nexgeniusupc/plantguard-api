@@ -1,0 +1,44 @@
+name: Deploy Template
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: Deployment environment to use
+        required: true
+        type: string
+      url:
+        description: Deployment URL to display to users
+        required: false
+        type: string
+      noop:
+        description: Run deployment in dry run mode
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  deploy:
+    name: Wrangler
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ inputs.url }}
+    concurrency: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node ${{ vars.NODE_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Deploy with Wrangler${{ inputs.noop && ' (dry run)' || '' }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy${{ inputs.noop && ' --dry-run' || '' }}
+          environment: ${{ inputs.environment }}
+          wranglerVersion: '^3.15.0'

@@ -3,7 +3,9 @@ main = "src/index.ts"
 compatibility_date = "2023-10-27"
 
 workers_dev = false
-route = { pattern = "plantguard-api.dalbitresb.com", custom_domain = true }
 
 [env.staging]
 route = { pattern = "plantguard-api-staging.dalbitresb.com", custom_domain = true }
+
+[env.production]
+route = { pattern = "plantguard-api.dalbitresb.com", custom_domain = true }

@@ -1,0 +1,30 @@
+name: PR Checks
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
+jobs:
+  pr-title:
+    name: Title follows Conventional Commits rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Validate PR title
+        # Using an intermediate value prevents script injection attacks
+        # See: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: echo "$TITLE" | yarn commitlint --verbose

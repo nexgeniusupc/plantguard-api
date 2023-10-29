@@ -1,0 +1,59 @@
+name: Node
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: 'github-check'
+          filter_mode: 'nofilter'
+          fail_on_error: true
+          eslint_flags: '.'
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - uses: EPMatt/reviewdog-action-prettier@v1
+        with:
+          reporter: 'github-check'
+          filter_mode: 'nofilter'
+          fail_on_error: true
+  tsc:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --immutable
+      - uses: EPMatt/reviewdog-action-tsc@v1
+        with:
+          reporter: 'github-check'
+          filter_mode: 'nofilter'
+          fail_on_error: true
