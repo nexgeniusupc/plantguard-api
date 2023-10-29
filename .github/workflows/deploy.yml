@@ -23,6 +23,8 @@ jobs:
     name: Dry Run
     if: github.event_name == 'pull_request'
     uses: ./.github/workflows/deploy-template.yml
+    # See: https://docs.github.com/en/actions/using-workflows/reusing-workflows#passing-inputs-and-secrets-to-a-reusable-workflow
+    secrets: inherit
     with:
       environment: build
       noop: true
@@ -30,6 +32,8 @@ jobs:
     name: Staging
     if: (github.event_name == 'push' && github.event.ref == 'refs/heads/develop') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
     uses: ./.github/workflows/deploy-template.yml
+    # See: https://docs.github.com/en/actions/using-workflows/reusing-workflows#passing-inputs-and-secrets-to-a-reusable-workflow
+    secrets: inherit
     with:
       environment: staging
       url: plantguard-api.dalbitresb.com
@@ -37,6 +41,8 @@ jobs:
     name: Production
     if: (github.event_name == 'push' && github.event.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
     uses: ./.github/workflows/deploy-template.yml
+    # See: https://docs.github.com/en/actions/using-workflows/reusing-workflows#passing-inputs-and-secrets-to-a-reusable-workflow
+    secrets: inherit
     with:
       environment: production
       url: plantguard-api-staging.dalbitresb.com
