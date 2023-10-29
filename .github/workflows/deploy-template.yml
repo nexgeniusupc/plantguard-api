@@ -32,6 +32,8 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
+      - name: Enable corepack
+        run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
       - name: Get Wrangler version from package.json
