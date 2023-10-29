@@ -36,7 +36,7 @@ jobs:
     secrets: inherit
     with:
       environment: staging
-      url: plantguard-api.dalbitresb.com
+      url: https://plantguard-api-staging.dalbitresb.com
   deploy-prod:
     name: Production
     if: (github.event_name == 'push' && github.event.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
@@ -45,4 +45,4 @@ jobs:
     secrets: inherit
     with:
       environment: production
-      url: plantguard-api-staging.dalbitresb.com
+      url: https://plantguard-api.dalbitresb.com
