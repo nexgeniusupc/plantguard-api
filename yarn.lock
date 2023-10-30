@@ -874,6 +874,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsndr/cloudflare-worker-jwt@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "@tsndr/cloudflare-worker-jwt@npm:2.2.5"
+  checksum: 58217c8424d423a7a62ab4e865de5fcf3b477a5b976812ba19c839794804b25791cf68c8f5585802f1c920e9318174a01bcbc4f12f0a853dc97372ce4ae154d8
+  languageName: node
+  linkType: hard
+
+"@types/bcryptjs@npm:^2.4.5":
+  version: 2.4.5
+  resolution: "@types/bcryptjs@npm:2.4.5"
+  checksum: a5c7989a67e882ea8bfb143c2be532b4eb2831f3cbc5315ea7172ac9ed999f2cc1887786721b657247e6de1e8c69c9b7ef714945f47f51dbb3154d107d4c3711
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^8.44.6":
   version: 8.44.6
   resolution: "@types/eslint@npm:8.44.6"
@@ -902,6 +916,13 @@ __metadata:
   version: 1.2.4
   resolution: "@types/minimist@npm:1.2.4"
   checksum: 01403652c09de17b8c6d7d9959cb7a244deccf31e9e7a1a7011fba73fa2724c14fe935718e0fdc48dcd30403fd76a916cb991d4c0ddf229748ccc6c4920c3371
+  languageName: node
+  linkType: hard
+
+"@types/ms@npm:^0.7.33":
+  version: 0.7.33
+  resolution: "@types/ms@npm:0.7.33"
+  checksum: ef610d94ebee838243af37800cb5d1a52b2ae0fb6880675fbb9276c0c4afcefda755f16889fa597ee4e5b377998a7e67b453614aae68d3225e5f7219984284df
   languageName: node
   linkType: hard
 
@@ -1264,6 +1285,13 @@ __metadata:
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
   checksum: 9308baf0a7e4838a82bbfd11e01b1cb0f0cf2893bc1676c27c2a8c0e70cbae1c59120c3268517a8ae7fb6376b4639ef81ca22582611dbee4ed28df945134aaee
+  languageName: node
+  linkType: hard
+
+"bcryptjs@npm:^2.4.3":
+  version: 2.4.3
+  resolution: "bcryptjs@npm:2.4.3"
+  checksum: b969467087ed7a01ff905a1c6a0c45014ec586248a448ea08370c8ed8bb314bda16a870ca23e0961d7d23bdce1a04c76fa70a9d680be814fa9ac7d8fc61870a3
   languageName: node
   linkType: hard
 
@@ -3324,7 +3352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ms@npm:^2.0.0":
+"ms@npm:^2.0.0, ms@npm:^2.1.3":
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48
@@ -3630,18 +3658,24 @@ __metadata:
     "@commitlint/cli": "npm:^18.2.0"
     "@commitlint/config-conventional": "npm:^18.1.0"
     "@ianvs/prettier-plugin-sort-imports": "npm:^4.1.1"
+    "@tsndr/cloudflare-worker-jwt": "npm:^2.2.5"
+    "@types/bcryptjs": "npm:^2.4.5"
     "@types/eslint": "npm:^8.44.6"
+    "@types/ms": "npm:^0.7.33"
     "@typescript-eslint/eslint-plugin": "npm:^6.9.0"
     "@typescript-eslint/parser": "npm:^6.9.0"
+    bcryptjs: "npm:^2.4.3"
     concurrently: "npm:^8.2.2"
     eslint: "npm:^8.52.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-unicorn: "npm:^48.0.1"
     itty-router: "npm:^4.0.23"
     lefthook: "npm:^1.5.2"
+    ms: "npm:^2.1.3"
     prettier: "npm:^3.0.3"
     typescript: "npm:^5.2.2"
     wrangler: "npm:^3.15.0"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -4666,7 +4700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.20.6":
+"zod@npm:^3.20.6, zod@npm:^3.22.4":
   version: 3.22.4
   resolution: "zod@npm:3.22.4"
   checksum: 7578ab283dac0eee66a0ad0fc4a7f28c43e6745aadb3a529f59a4b851aa10872b3890398b3160f257f4b6817b4ce643debdda4fb21a2c040adda7862cab0a587
