@@ -43,9 +43,13 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - name: Deploy with Wrangler${{ inputs.noop && ' (dry run)' || '' }}
         uses: cloudflare/wrangler-action@v3
+        env:
+          JWT_TOKEN: ${{ secrets.JWT_TOKEN }}
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy${{ inputs.noop && ' --dry-run' || '' }}
           environment: ${{ inputs.noop && '' || inputs.environment }}
+          secrets: |
+            JWT_TOKEN
           wranglerVersion: ${{ steps.wrangler-version.outputs.version }}
