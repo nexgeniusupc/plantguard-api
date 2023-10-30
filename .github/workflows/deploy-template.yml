@@ -47,5 +47,5 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: deploy${{ inputs.noop && ' --dry-run' || '' }}
-          environment: ${{ inputs.environment }}
+          environment: ${{ inputs.noop && '' || inputs.environment }}
           wranglerVersion: ${{ steps.wrangler-version.outputs.version }}
