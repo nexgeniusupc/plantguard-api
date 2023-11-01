@@ -1,11 +1,25 @@
-name = "plantguard-api"
+name = "plantguard-api-dev"
 main = "src/index.ts"
 compatibility_date = "2023-10-27"
 
 workers_dev = false
 
+kv_namespaces = [
+  { binding = "users", id = "users", preview_id = "users" }
+]
+
 [env.staging]
+name = "plantguard-api-staging"
 route = { pattern = "plantguard-api-staging.dalbitresb.com", custom_domain = true }
 
+kv_namespaces = [
+  { binding = "users", id = "5e1f3151dcf5421b89069969d45a0aaf", preview_id = "users" }
+]
+
 [env.production]
+name = "plantguard-api-production"
 route = { pattern = "plantguard-api.dalbitresb.com", custom_domain = true }
+
+kv_namespaces = [
+  { binding = "users", id = "38543b8acb88408c90c2cc3c13399444", preview_id = "users" }
+]
