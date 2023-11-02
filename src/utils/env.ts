@@ -17,6 +17,7 @@ export interface AppBindings {
   JWT_SECRET: string;
   // KV
   users: KVNamespace;
+  devices: KVNamespace;
 }
 
 export interface AppEnv extends AppBindings {
