@@ -18,10 +18,7 @@ export type DeviceMetadata = z.infer<typeof DeviceMetadata>;
 
 export const DeviceListQuery = z.object({
   limit: z.number().min(1).max(50).optional().default(10),
-  cursor: z
-    .string()
-    .optional()
-    .default(() => crypto.randomUUID()),
+  cursor: z.string().optional(),
 });
 export type DeviceListQuery = z.infer<typeof DeviceListQuery>;
 

@@ -10,6 +10,7 @@ import {
   DeviceUpdateRequest,
 } from "../models/device";
 import { assertModel, parseBody } from "../utils/model-parser";
+import { PaginationMetadata } from "../utils/pagination";
 import { createAuthenticatedRouter } from "../utils/router";
 import { createDeviceKey, isValidDeviceId, parseDeviceKey } from "./utils";
 
@@ -18,7 +19,7 @@ const router = createAuthenticatedRouter({ base: "/api/v1/devices" });
 router.get("/", async (request, env): Promise<DeviceListResponse> => {
   const { limit, cursor } = await assertModel(request.query, DeviceListQuery);
 
-  const results = await env.devices.list({ limit, cursor, prefix: request.user.id });
+  const results = await env.devices.list({ limit, cursor, prefix: `${request.user.id}:` });
   const data = results.keys.map<DeviceListResponseData>(key => {
     const metadata = DeviceMetadata.parse(key.metadata);
     const parsedKey = parseDeviceKey(key.name);
@@ -28,14 +29,18 @@ router.get("/", async (request, env): Promise<DeviceListResponse> => {
     };
   });
 
-  return {
-    data,
-    pagination: {
-      limit,
-      cursor,
-      complete: results.list_complete,
-    },
-  };
+  const pagination: PaginationMetadata = results.list_complete
+    ? {
+        complete: results.list_complete,
+        limit,
+      }
+    : {
+        complete: results.list_complete,
+        cursor: results.cursor,
+        limit,
+      };
+
+  return { data, pagination };
 });
 
 router.post("/", async (request, env) => {
@@ -77,7 +82,7 @@ router.get("/:id", async (request, env): Promise<Device> => {
     throw new StatusError(404);
   }
 
-  return Device.parse(device);
+  return Device.parse(JSON.parse(device));
 });
 
 router.patch("/:id", async (request, env): Promise<Device> => {
@@ -91,7 +96,7 @@ router.patch("/:id", async (request, env): Promise<Device> => {
   if (!device) {
     throw new StatusError(404);
   }
-  const parsedDevice = Device.parse(device);
+  const parsedDevice = Device.parse(JSON.parse(device));
 
   const req = await parseBody(request, DeviceUpdateRequest);
   const updatedDevice: Device = {
@@ -117,7 +122,7 @@ router.delete("/:id", async (request, env) => {
   if (!device) {
     throw new StatusError(404);
   }
-  const parsedDevice = Device.parse(device);
+  const parsedDevice = Device.parse(JSON.parse(device));
 
   await env.devices.delete(key);
   await env.devices.delete(parsedDevice.serialNumber);
