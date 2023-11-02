@@ -16,7 +16,7 @@ import { createDeviceKey, isValidDeviceId, parseDeviceKey } from "./utils";
 const router = createAuthenticatedRouter({ base: "/api/v1/devices" });
 
 router.get("/", async (request, env): Promise<DeviceListResponse> => {
-  const { limit, cursor = crypto.randomUUID() } = await assertModel(request.query, DeviceListQuery);
+  const { limit, cursor } = await assertModel(request.query, DeviceListQuery);
 
   const results = await env.devices.list({ limit, cursor, prefix: request.user.id });
   const data = results.keys.map<DeviceListResponseData>(key => {
