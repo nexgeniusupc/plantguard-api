@@ -12,14 +12,15 @@ import {
 import { assertModel, parseBody } from "../utils/model-parser";
 import { PaginationMetadata } from "../utils/pagination";
 import { createAuthenticatedRouter } from "../utils/router";
-import { createDeviceKey, isValidDeviceId, parseDeviceKey } from "./utils";
+import { createDeviceKey, createSerialNumberKey, isValidDeviceId, parseDeviceKey } from "./utils";
 
 const router = createAuthenticatedRouter({ base: "/api/v1/devices" });
 
 router.get("/", async (request, env): Promise<DeviceListResponse> => {
   const { limit, cursor } = await assertModel(request.query, DeviceListQuery);
 
-  const results = await env.devices.list({ limit, cursor, prefix: `${request.user.id}:` });
+  const listKey = createDeviceKey(request.user.id, "");
+  const results = await env.devices.list({ limit, cursor, prefix: listKey });
   const data = results.keys.map<DeviceListResponseData>(key => {
     const metadata = DeviceMetadata.parse(key.metadata);
     const parsedKey = parseDeviceKey(key.name);
@@ -46,7 +47,8 @@ router.get("/", async (request, env): Promise<DeviceListResponse> => {
 router.post("/", async (request, env) => {
   const req = await parseBody(request, DeviceRegistrationRequest);
 
-  const possibleOwner = await env.devices.get(req.serialNumber);
+  const serialNumberKey = createSerialNumberKey(req.serialNumber);
+  const possibleOwner = await env.devices.get(serialNumberKey);
   if (possibleOwner) {
     throw new StatusError(400, "The serial number has already been registered");
   }
@@ -60,10 +62,10 @@ router.post("/", async (request, env) => {
     updatedAt: now,
   };
   const metadata: DeviceMetadata = { name: device.name };
-  const key = createDeviceKey(request.user.id, device.id);
+  const deviceKey = createDeviceKey(request.user.id, device.id);
 
-  await env.devices.put(key, JSON.stringify(device), { metadata });
-  await env.devices.put(device.serialNumber, device.userId);
+  await env.devices.put(deviceKey, JSON.stringify(device), { metadata });
+  await env.devices.put(serialNumberKey, device.userId);
 
   const headers = new Headers();
   headers.set("Location", `/api/v1/devices/${device.id}`);
@@ -92,7 +94,7 @@ router.patch("/:id", async (request, env): Promise<Device> => {
   }
 
   const key = createDeviceKey(request.user.id, id);
-  const device = await env.devices.get(`${request.user.id}:${id}`);
+  const device = await env.devices.get(key);
   if (!device) {
     throw new StatusError(404);
   }
@@ -117,15 +119,16 @@ router.delete("/:id", async (request, env) => {
     throw new StatusError(400, "Invalid ID");
   }
 
-  const key = createDeviceKey(request.user.id, id);
-  const device = await env.devices.get(key);
+  const deviceKey = createDeviceKey(request.user.id, id);
+  const device = await env.devices.get(deviceKey);
   if (!device) {
     throw new StatusError(404);
   }
   const parsedDevice = Device.parse(JSON.parse(device));
+  const serialNumberKey = createSerialNumberKey(parsedDevice.serialNumber);
 
-  await env.devices.delete(key);
-  await env.devices.delete(parsedDevice.serialNumber);
+  await env.devices.delete(deviceKey);
+  await env.devices.delete(serialNumberKey);
 
   return new Response(undefined, { status: 204 });
 });
