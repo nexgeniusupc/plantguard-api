@@ -39,3 +39,44 @@ export type DeviceRegistrationRequest = z.infer<typeof DeviceRegistrationRequest
 
 export const DeviceUpdateRequest = Device.pick({ name: true }).partial();
 export type DeviceUpdateRequest = z.infer<typeof DeviceUpdateRequest>;
+
+export const DevicePairRequest = Device.pick({ serialNumber: true }).extend({
+  code: z
+    .string()
+    .min(6)
+    .max(6)
+    .regex(/^\d{6}$/g),
+  secret: z.string(),
+  jwt: z.string().optional(),
+  expirationTtl: z.number().max(600).optional().default(300),
+});
+export type DevicePairRequest = z.infer<typeof DevicePairRequest>;
+
+export const DevicePairInitRequest = DevicePairRequest.pick({
+  serialNumber: true,
+  expirationTtl: true,
+});
+export type DevicePairInitRequest = z.infer<typeof DevicePairInitRequest>;
+
+export const DevicePairInitResponse = DevicePairRequest.pick({
+  code: true,
+  secret: true,
+});
+export type DevicePairInitResponse = z.infer<typeof DevicePairInitResponse>;
+
+export const DevicePairFindQuery = DevicePairRequest.pick({ code: true });
+export type DevicePairFindQuery = z.infer<typeof DevicePairFindQuery>;
+
+export const DevicePairFindResponse = DevicePairRequest.pick({ code: true, serialNumber: true });
+export type DevicePairFindResponse = z.infer<typeof DevicePairFindResponse>;
+
+export const DevicePairCheckRequest = DevicePairRequest.pick({ code: true, secret: true });
+export type DevicePairCheckRequest = z.infer<typeof DevicePairCheckRequest>;
+
+export const DevicePairCheckResponse = DevicePairRequest.pick({ jwt: true });
+export type DevicePairCheckResponse = z.infer<typeof DevicePairCheckResponse>;
+
+export const DevicePairConfirmRequest = DevicePairRequest.pick({ code: true }).extend({
+  name: Device.shape.name,
+});
+export type DevicePairConfirmRequest = z.infer<typeof DevicePairConfirmRequest>;
