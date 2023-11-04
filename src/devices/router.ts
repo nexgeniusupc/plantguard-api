@@ -12,6 +12,7 @@ import {
 import { assertModel, parseBody } from "../utils/model-parser";
 import { PaginationMetadata } from "../utils/pagination";
 import { createAuthenticatedRouter } from "../utils/router";
+import { registerDevice } from "./register-device";
 import { createDeviceKey, createSerialNumberKey, isValidDeviceId, parseDeviceKey } from "./utils";
 
 const router = createAuthenticatedRouter({ base: "/api/v1/devices" });
@@ -47,25 +48,7 @@ router.get("/", async (request, env): Promise<DeviceListResponse> => {
 router.post("/", async (request, env) => {
   const req = await parseBody(request, DeviceRegistrationRequest);
 
-  const serialNumberKey = createSerialNumberKey(req.serialNumber);
-  const possibleOwner = await env.devices.get(serialNumberKey);
-  if (possibleOwner) {
-    throw new StatusError(400, "The serial number has already been registered");
-  }
-
-  const now = new Date();
-  const device: Device = {
-    ...req,
-    id: crypto.randomUUID(),
-    userId: request.user.id,
-    createdAt: now,
-    updatedAt: now,
-  };
-  const metadata: DeviceMetadata = { name: device.name };
-  const deviceKey = createDeviceKey(request.user.id, device.id);
-
-  await env.devices.put(deviceKey, JSON.stringify(device), { metadata });
-  await env.devices.put(serialNumberKey, device.userId);
+  const device = await registerDevice(env.devices, request.user, req);
 
   const headers = new Headers();
   headers.set("Location", `/api/v1/devices/${device.id}`);
