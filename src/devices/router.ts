@@ -1,4 +1,4 @@
-import { json, StatusError } from "itty-router";
+import { StatusError } from "itty-router";
 
 import {
   Device,
@@ -6,13 +6,11 @@ import {
   DeviceListResponse,
   DeviceListResponseData,
   DeviceMetadata,
-  DeviceRegistrationRequest,
   DeviceUpdateRequest,
 } from "../models/device";
 import { assertModel, parseBody } from "../utils/model-parser";
 import { PaginationMetadata } from "../utils/pagination";
 import { createAuthenticatedRouter } from "../utils/router";
-import { registerDevice } from "./register-device";
 import { createDeviceKey, createSerialNumberKey, isValidDeviceId, parseDeviceKey } from "./utils";
 
 const router = createAuthenticatedRouter({ base: "/api/v1/devices" });
@@ -43,16 +41,6 @@ router.get("/", async (request, env): Promise<DeviceListResponse> => {
       };
 
   return { data, pagination };
-});
-
-router.post("/", async (request, env) => {
-  const req = await parseBody(request, DeviceRegistrationRequest);
-
-  const device = await registerDevice(env.devices, request.user, req);
-
-  const headers = new Headers();
-  headers.set("Location", `/api/v1/devices/${device.id}`);
-  return json(device, { headers, status: 201 });
 });
 
 router.get("/:id", async (request, env): Promise<Device> => {
