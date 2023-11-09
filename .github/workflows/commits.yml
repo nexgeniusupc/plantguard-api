@@ -28,4 +28,4 @@ jobs:
         run: yarn commitlint --verbose --from ${{ github.event.before }} --to ${{ github.event.after }}
       - name: Validate commits for pull request
         if: github.event_name == 'pull_request'
-        run: yarn commitlint --verbose --from ${{ github.event.pull_request.base.ref }} --to ${{ github.event.pull_request.head.sha }}
+        run: yarn commitlint --verbose --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
