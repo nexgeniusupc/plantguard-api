@@ -13,13 +13,13 @@ jobs:
     name: Title follows Conventional Commits rules
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
+      - name: Enable corepack
+        run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
       - name: Validate PR title

@@ -4,8 +4,23 @@ compatibility_date = "2023-10-27"
 
 workers_dev = false
 
+kv_namespaces = [
+  { binding = "users", id = "a0003162de054a9d89ded0b465c2fd09", preview_id = "a0003162de054a9d89ded0b465c2fd09" },
+  { binding = "devices", id = "d81daa0724494d5cbb5201b02d22229b", preview_id = "d81daa0724494d5cbb5201b02d22229b" },
+]
+
 [env.staging]
 route = { pattern = "plantguard-api-staging.dalbitresb.com", custom_domain = true }
 
+kv_namespaces = [
+  { binding = "users", id = "a0003162de054a9d89ded0b465c2fd09" },
+  { binding = "devices", id = "d81daa0724494d5cbb5201b02d22229b" },
+]
+
 [env.production]
 route = { pattern = "plantguard-api.dalbitresb.com", custom_domain = true }
+
+kv_namespaces = [
+  { binding = "users", id = "df2d81c34e824e629692fd177ebd5d9c" },
+  { binding = "devices", id = "7328c0185ae84f2ca0068931bb9e04d2" },
+]

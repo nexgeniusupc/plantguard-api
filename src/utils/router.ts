@@ -1,14 +1,22 @@
-import { IRequest, Router, RouterOptions } from "itty-router";
+import { RouteHandler, Router, RouterOptions } from "itty-router";
 
-export type AppRequest = {
-  // This is just defined so that the correct types in itty-router are used
-  placeholder: never;
-} & IRequest;
+import { authMiddleware } from "../auth/middleware";
+import { AppEnv, AppRequest, AuthenticatedRequest } from "./env";
 
-export interface AppEnv {}
+export type AppRouteArgs = [env: AppEnv, ctx: ExecutionContext];
 
-export type RouteArgs = [env: AppEnv, ctx: ExecutionContext];
+export type AppRouteHandler<TRequest extends AppRequest = AppRequest> = RouteHandler<TRequest, AppRouteArgs>;
+export type AppMiddleware<TRequest extends AppRequest = AppRequest> = AppRouteHandler<TRequest>;
 
-export function createRouter(options?: RouterOptions) {
-  return Router<AppRequest, RouteArgs>(options);
+export function createRouter<TRequest extends AppRequest = AppRequest>(options?: RouterOptions) {
+  return Router<TRequest, AppRouteArgs>(options);
 }
+
+export function createAuthenticatedRouter(options?: RouterOptions) {
+  const router = createRouter<AuthenticatedRequest>(options);
+  router.all("*", authMiddleware);
+  return router;
+}
+
+export type AuthenticatedRouteHandler = AppRouteHandler<AuthenticatedRequest>;
+export type AuthenticatedMiddleware = AppMiddleware<AuthenticatedRequest>;

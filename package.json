@@ -1,6 +1,6 @@
 {
   "name": "plantguard-api",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "The API backend for PlantGuard, an IoT plant water monitoring system, powered by Cloudflare Workers.",
   "author": {
     "name": "NexGenius",
@@ -36,15 +36,21 @@
     "format:fix:yml": "prettier -w \"**/*.yml\""
   },
   "dependencies": {
+    "@tsndr/cloudflare-worker-jwt": "^2.2.5",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^8.2.2",
-    "itty-router": "^4.0.23"
+    "itty-router": "^4.0.23",
+    "ms": "^2.1.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/bcryptjs": "^2.4.5",
     "@types/eslint": "^8.44.6",
+    "@types/ms": "^0.7.33",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
     "eslint": "^8.52.0",

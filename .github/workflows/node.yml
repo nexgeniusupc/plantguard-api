@@ -17,6 +17,8 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
+      - name: Enable corepack
+        run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
       - uses: reviewdog/action-eslint@v1
@@ -34,6 +36,8 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
+      - name: Enable corepack
+        run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
       - uses: EPMatt/reviewdog-action-prettier@v1
@@ -50,6 +54,8 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
+      - name: Enable corepack
+        run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
       - uses: EPMatt/reviewdog-action-tsc@v1
