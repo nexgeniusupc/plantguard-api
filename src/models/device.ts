@@ -26,7 +26,7 @@ export const DeviceListResponseData = Device.pick({ id: true, name: true });
 export type DeviceListResponseData = z.infer<typeof DeviceListResponseData>;
 
 export const DeviceListResponse = z.object({
-  data: z.array(DeviceMetadata),
+  data: z.array(DeviceListResponseData),
   pagination: PaginationMetadata,
 });
 export type DeviceListResponse = z.infer<typeof DeviceListResponse>;
