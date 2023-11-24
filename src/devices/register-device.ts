@@ -23,7 +23,7 @@ export async function registerDevice(db: KVNamespace, user: User, req: DeviceReg
   const deviceKey = createDeviceKey(user.id, device.id);
 
   await db.put(deviceKey, JSON.stringify(device), { metadata });
-  await db.put(serialNumberKey, device.userId);
+  await db.put(serialNumberKey, device.id);
 
   return device;
 }
