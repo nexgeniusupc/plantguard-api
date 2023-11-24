@@ -5,13 +5,15 @@ import {
   DeviceListQuery,
   DeviceListResponse,
   DeviceListResponseData,
+  DeviceMeasurement,
+  DeviceMeasurementRequest,
   DeviceMetadata,
   DeviceUpdateRequest,
 } from "../models/device";
 import { assertModel, parseBody } from "../utils/model-parser";
 import { PaginationMetadata } from "../utils/pagination";
 import { createAuthenticatedRouter } from "../utils/router";
-import { createDeviceKey, createSerialNumberKey, isValidDeviceId, parseDeviceKey } from "./utils";
+import { createDeviceKey, createMeasurementKey, createSerialNumberKey, isValidDeviceId, parseDeviceKey } from "./utils";
 
 const router = createAuthenticatedRouter({ base: "/api/v1/devices" });
 
@@ -43,6 +45,32 @@ router.get("/", async (request, env): Promise<DeviceListResponse> => {
   return { data, pagination };
 });
 
+router.post("/measure", async (request, env) => {
+  const { serialNumber, ...rest } = await parseBody(request, DeviceMeasurementRequest);
+  const serialNumberKey = createSerialNumberKey(serialNumber);
+
+  const deviceId = await env.devices.get(serialNumberKey);
+  if (!deviceId) {
+    throw new StatusError(404);
+  }
+
+  // This indirectly checks if the current user is the owner of the device
+  const deviceKey = createDeviceKey(request.user.id, deviceId);
+  const device = await env.devices.get(deviceKey);
+  if (!device) {
+    throw new StatusError(404);
+  }
+
+  const measurementKey = createMeasurementKey(deviceId);
+  const measurement: DeviceMeasurement = {
+    ...rest,
+    date: new Date(),
+  };
+  await env.devices.put(measurementKey, JSON.stringify(measurement));
+
+  return new Response(undefined, { status: 204 });
+});
+
 router.get("/:id", async (request, env): Promise<Device> => {
   const { id } = request.params;
   if (!isValidDeviceId(id)) {
@@ -56,6 +84,28 @@ router.get("/:id", async (request, env): Promise<Device> => {
   }
 
   return Device.parse(JSON.parse(device));
+});
+
+router.get("/:id/current", async (request, env): Promise<Response | DeviceMeasurement> => {
+  const { id } = request.params;
+  if (!isValidDeviceId(id)) {
+    throw new StatusError(400, "Invalid ID");
+  }
+
+  // This indirectly checks if the current user is the owner of the device
+  const deviceKey = createDeviceKey(request.user.id, id);
+  const device = await env.devices.get(deviceKey);
+  if (!device) {
+    throw new StatusError(404);
+  }
+
+  const measurementKey = createMeasurementKey(id);
+  const measurement = await env.devices.get(measurementKey);
+  if (!measurement) {
+    return new Response(undefined, { status: 204 });
+  }
+
+  return DeviceMeasurement.parse(JSON.parse(measurement));
 });
 
 router.patch("/:id", async (request, env): Promise<Device> => {

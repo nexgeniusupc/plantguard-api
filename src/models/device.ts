@@ -80,3 +80,15 @@ export const DevicePairConfirmRequest = DevicePairRequest.pick({ code: true }).e
   name: Device.shape.name,
 });
 export type DevicePairConfirmRequest = z.infer<typeof DevicePairConfirmRequest>;
+
+export const DeviceMeasurement = z.object({
+  temperature: z.number(),
+  humidity: z.number(),
+  date: ZodDate,
+});
+export type DeviceMeasurement = z.infer<typeof DeviceMeasurement>;
+
+export const DeviceMeasurementRequest = DeviceMeasurement.omit({ date: true }).merge(
+  Device.pick({ serialNumber: true }),
+);
+export type DeviceMeasurementRequest = z.infer<typeof DeviceMeasurementRequest>;
