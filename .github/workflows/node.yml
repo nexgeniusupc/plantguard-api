@@ -13,11 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Enable corepack before running setup-node
+        run: corepack enable
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
-      - name: Enable corepack
+      - name: Ensure corepack is used
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
@@ -32,11 +34,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Enable corepack before running setup-node
+        run: corepack enable
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
-      - name: Enable corepack
+      - name: Ensure corepack is used
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
@@ -50,11 +54,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Enable corepack before running setup-node
+        run: corepack enable
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
-      - name: Enable corepack
+      - name: Ensure corepack is used
         run: corepack enable
       - name: Install dependencies
         run: yarn install --immutable
