@@ -20,6 +20,12 @@ export function createSerialNumberKey(serialNumber: string): string {
   return createKey([serialNumberKeyPrefix, serialNumber]);
 }
 
+const measurementKeyPrefix = "measure";
+
+export function createMeasurementKey(deviceId: string): string {
+  return createKey([measurementKeyPrefix, deviceId]);
+}
+
 export function parseDeviceKey(key: string): DeviceKey {
   const split = splitKey(key);
   if (split[0] !== deviceKeyPrefix) {

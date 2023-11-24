@@ -23,8 +23,8 @@ router.post("/init", async (request, env): Promise<DevicePairInitResponse> => {
   const req = await parseBody(request, DevicePairInitRequest);
   const serialNumberKey = createSerialNumberKey(req.serialNumber);
 
-  const possibleOwner = await env.devices.get(serialNumberKey);
-  if (possibleOwner) {
+  const possibleId = await env.devices.get(serialNumberKey);
+  if (possibleId) {
     throw new StatusError(400, "The serial number has already been registered");
   }
 
